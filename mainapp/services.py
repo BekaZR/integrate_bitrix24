@@ -1,12 +1,12 @@
-from parsing import Bot, Parse
+from parsing import Bot
 from bitrix import BitrixCrm, Deal
 
 
 def event(link):
-    bot = Bot(link)
-    parse = Parse(bot())
-    parse()
-    data = parse.get_data_from_post()
+    with Bot(link) as bot:
+        bot.get_post_list()
+        data = bot.get_data_for_bitrix()
+    
     for i in data:
         deal = Deal(**i)
         bitrix = BitrixCrm(deal)
