@@ -1,6 +1,7 @@
 from parsing import Bot
 from bitrix import BitrixCrm, Deal
 
+from time import sleep
 
 def event(link):
     with Bot(link) as bot:
@@ -10,6 +11,9 @@ def event(link):
     for i in data:
         deal = Deal(**i)
         bitrix = BitrixCrm(deal)
-        bitrix.crm_add_deal()
+        try:
+            bitrix.crm_add_deal()
+        except Exception:
+            pass
 
 
